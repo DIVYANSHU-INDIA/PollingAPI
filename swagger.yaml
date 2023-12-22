@@ -1,0 +1,236 @@
+openapi: 3.0.0
+info:
+  title: Polling System API
+  description: An open API for the polling system - rahul4019
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+    description: Live URL hosted on render
+
+paths:
+  /:
+    get:
+      tags:
+        - Home
+      summary: Returns a greet message from the polling system API
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+
+  /questions/create:
+    post:
+      tags:
+        - Question
+      summary: Creates a question. Required field is title
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  question:
+                    $ref: '#/components/schemas/Question'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /questions/{id}/options/create:
+    post:
+      tags:
+        - Question
+      summary: Adds an option to a specific question based on the passed question id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  option:
+                    $ref: '#/components/schemas/Option'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /questions/{id}/delete:
+    delete:
+      tags:
+        - Question
+      summary: Deletes a question based on the passed question id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /options/{id}/delete:
+    delete:
+      tags:
+        - Option
+      summary: Deletes an option based on the passed option id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /options/{id}/add_vote:
+    put:
+      tags:
+        - Option
+      summary: Increases vote by one for an option based on the passed option id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  option:
+                    $ref: '#/components/schemas/Option'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /questions/{id}:
+    get:
+      tags:
+        - Question
+      summary: Returns a question with its options
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  question:
+                    $ref: '#/components/schemas/Question'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+        totalVotes:
+          type: number
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    Option:
+      type: object
+      properties:
+        _id:
+  
