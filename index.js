@@ -1,11 +1,14 @@
 // Import the Express library
 const express = require('express');
+const cors = require('cors');
+
 
 // Import the function to connect with the database
 const connectWithDb = require('./config/mongo');
 
 // Create an instance of the Express application
 const app = express();
+app.use(cors());
 
 // Import Swagger dependencies for API documentation
 const swaggerUi = require('swagger-ui-express');
