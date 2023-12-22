@@ -22,7 +22,7 @@ To get started, follow these steps:
 ## Usage
 
 1. Run `npm start` to start the application.
-2. Connect to the API using Postman on port 8000.
+2. Connect to the API using Postman on port 5000.
 
 ## API Endpoints
 
