@@ -76,7 +76,7 @@ module.exports.createOptions = async (req, res) => {
     });
 
     // Create a link_to_vote using the _id of the option
-    const link_to_vote = `https://polling-system-api0.herokuapp.com/options/${option.id}/add_vote`;
+    const link_to_vote = `https://localhost:5000/options/${option.id}/add_vote`;
     
     // Update the option with the created link_to_vote
     option.link_to_vote = link_to_vote;
